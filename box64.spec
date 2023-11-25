@@ -1,7 +1,6 @@
- Tests are disabled as they require x86_64 libraries to run
+# Tests are disabled as they require x86_64 libraries to run
 %bcond_with tests
  
-%global forgeurl https://github.com/ptitSeb/box64
  
 %global common_description %{expand:
 Box64 lets you run x86_64 Linux programs (such as games) on non-x86_64 Linux
@@ -9,17 +8,16 @@ systems, like ARM (host system needs to be 64-bit little-endian).}
  
 Name:           box64
 Version:        0.2.4
-Release:        %autorelease
+Release:        1
 Summary:        Linux userspace x86_64 emulator with a twist, targeted at ARM64
- 
+Group:          System/Games 
 License:        MIT
 URL:            https://box86.org
-Source:         %{forgeurl}/archive/v%{version}/%{name}-%{version}.tar.gz
+Source:         https://github.com/ptitSeb/box64/archive/v%{version}/%{name}-%{version}.tar.gz
  
 BuildRequires:  cmake
 BuildRequires:  gcc
 BuildRequires:  make
-BuildRequires:  systemd-rpm-macros
  
 # box64 only supports these architectures
 ExclusiveArch:  aarch64 ppc64le x86_64
@@ -183,67 +181,67 @@ sed -i 's:/etc/binfmt.d:%{_binfmtdir}:g' CMakeLists.txt
 %ifarch aarch64
 # Apple Silicon
 %cmake %{common_flags} -DM1=ON
-%cmake_build
+%make_build
 cp -p %{__cmake_builddir}/%{name} %{name}.asahi
 rm -r %{__cmake_builddir}
  
 # NXP LX2160A
 %cmake %{common_flags} -DLX2160A=ON
-%cmake_build
+%make_build
 cp -p %{__cmake_builddir}/%{name} %{name}.lx2160a
 rm -r %{__cmake_builddir}
  
 # ODROID-N2/N2+
 %cmake %{common_flags} -DODROIDN2=ON
-%cmake_build
+%make_build
 cp -p %{__cmake_builddir}/%{name} %{name}.odroidn2
 rm -r %{__cmake_builddir}
  
 # Rockchip RK3326
 %cmake %{common_flags} -DRK3326=ON
-%cmake_build
+%make_build
 cp -p %{__cmake_builddir}/%{name} %{name}.rk3326
 rm -r %{__cmake_builddir}
  
 # Rockchip RK3399
 %cmake %{common_flags} -DRK3399=ON
-%cmake_build
+%make_build
 cp -p %{__cmake_builddir}/%{name} %{name}.rk3399
 rm -r %{__cmake_builddir}
  
 # Rockchip RK3588/RK3588S
 %cmake %{common_flags} -DRK3588=ON
-%cmake_build
+%make_build
 cp -p %{__cmake_builddir}/%{name} %{name}.rk3588
 rm -r %{__cmake_builddir}
  
 # Raspberry PI 3
 %cmake %{common_flags} -DRPI3ARM64=ON
-%cmake_build
+%make_build
 cp -p %{__cmake_builddir}/%{name} %{name}.rpi3
 rm -r %{__cmake_builddir}
  
 # Raspberry PI 3
 %cmake %{common_flags} -DRPI4ARM64=ON
-%cmake_build
+%make_build
 cp -p %{__cmake_builddir}/%{name} %{name}.rpi4
 rm -r %{__cmake_builddir}
  
 # Qualcomm Snapdragon 845
 %cmake %{common_flags} -DSD845=ON
-%cmake_build
+%make_build
 cp -p %{__cmake_builddir}/%{name} %{name}.sd845
 rm -r %{__cmake_builddir}
  
 # Qualcomm Snapdragon 888
 %cmake %{common_flags} -DSD888=ON
-%cmake_build
+%make_build
 cp -p %{__cmake_builddir}/%{name} %{name}.sd888
 rm -r %{__cmake_builddir}
  
 # Nvidia Tegra X1
 %cmake %{common_flags} -DTEGRAX1=ON
-%cmake_build
+%make_build
 cp -p %{__cmake_builddir}/%{name} %{name}.tegrax1
 rm -r %{__cmake_builddir}
 %endif
@@ -259,7 +257,7 @@ rm -r %{__cmake_builddir}
   -DLD80BITS=ON \
   -DNOALIGN=ON
 %endif
-%cmake_build
+%make_build
 %install
 %ifarch x86_64
 # Install manually as cmake_install doesn't seem to work on x86_64
@@ -270,7 +268,7 @@ sed 's:${CMAKE_INSTALL_PREFIX}/bin/${BOX64}:%{_bindir}/%{name}:' \
 install -Dpm0644 -t %{buildroot}%{_binfmtdir} system/box64.conf
 install -Dpm0644 -t %{buildroot}%{_sysconfdir} system/box64.box64rc
 %else
-%cmake_install
+%make_install -C build
 %endif
  
 %ifarch aarch64
