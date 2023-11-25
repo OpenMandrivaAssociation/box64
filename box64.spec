@@ -1,3 +1,5 @@
+%global optflags %{optflags} -Wno-error -Wno-implicit-function-declaration
+
 # Tests are disabled as they require x86_64 libraries to run
 %bcond_with tests
  
