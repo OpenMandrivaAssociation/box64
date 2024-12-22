@@ -274,119 +274,192 @@ sed -i 's:/etc/binfmt.d:%{_binfmtdir}:g' CMakeLists.txt
 %ifarch aarch64
 %global common_flags -DARM_DYNAREC=ON %{common_flags}
 
+
+export CMAKE_BUILD_DIR=build-adlink
 # ADLink AmpereAltra
 %cmake %{common_flags} -DADLINK=ON
-%cmake_build
+%make_build
 cp -p %{__cmake_builddir}/%{name} %{name}.adlink
 rm -r %{__cmake_builddir}
 
+cd ..
+
+
+export CMAKE_BUILD_DIR=build-asahi
 # Apple Silicon
 %cmake %{common_flags} -DM1=ON
-%cmake_build
+%make_build
 cp -p %{__cmake_builddir}/%{name} %{name}.asahi
 rm -r %{__cmake_builddir}
 
+cd ..
+
+
+export CMAKE_BUILD_DIR=build-lx2160a
 # NXP LX2160A
 %cmake %{common_flags} -DLX2160A=ON
-%cmake_build
+%make_build
 cp -p %{__cmake_builddir}/%{name} %{name}.lx2160a
 rm -r %{__cmake_builddir}
 
+cd ..
+
+export CMAKE_BUILD_DIR=build-odroidn2
 # ODROID-N2/N2+
 %cmake %{common_flags} -DODROIDN2=ON
-%cmake_build
+%make_build
 cp -p %{__cmake_builddir}/%{name} %{name}.odroidn2
 rm -r %{__cmake_builddir}
 
+cd ..
+
+export CMAKE_BUILD_DIR=build-phytium
 # Phytium (D2000 or FT2000/4)
 %cmake %{common_flags} -DPHYTIUM=ON
-%cmake_build
+%make_build
 cp -p %{__cmake_builddir}/%{name} %{name}.phytium
 rm -r %{__cmake_builddir}
 
+cd ..
+
+
+export CMAKE_BUILD_DIR=build-rk3326
 # Rockchip RK3326
 %cmake %{common_flags} -DRK3326=ON
-%cmake_build
+%make_build
 cp -p %{__cmake_builddir}/%{name} %{name}.rk3326
 rm -r %{__cmake_builddir}
 
+cd ..
+
+
+export CMAKE_BUILD_DIR=build-rk3399
 # Rockchip RK3399
 %cmake %{common_flags} -DRK3399=ON
-%cmake_build
+%make_build
 cp -p %{__cmake_builddir}/%{name} %{name}.rk3399
 rm -r %{__cmake_builddir}
 
+cd ..
+
+
+export CMAKE_BUILD_DIR=build-rk3588
 # Rockchip RK3588/RK3588S
 %cmake %{common_flags} -DRK3588=ON
-%cmake_build
+%make_build
 cp -p %{__cmake_builddir}/%{name} %{name}.rk3588
 rm -r %{__cmake_builddir}
 
+cd ..
+
+
+export CMAKE_BUILD_DIR=build-rpi3
 # Raspberry PI 3
 %cmake %{common_flags} -DRPI3ARM64=ON
-%cmake_build
+%make_build
 cp -p %{__cmake_builddir}/%{name} %{name}.rpi3
 rm -r %{__cmake_builddir}
 
+cd ..
+
+
+export CMAKE_BUILD_DIR=build-rpi4
 # Raspberry PI 4
 %cmake %{common_flags} -DRPI4ARM64=ON
-%cmake_build
+%make_build
 cp -p %{__cmake_builddir}/%{name} %{name}.rpi4
 rm -r %{__cmake_builddir}
 
+cd ..
+
+
+export CMAKE_BUILD_DIR=build-rpi5
 # Raspberry PI 5
 %cmake %{common_flags} -DRPI5ARM64=ON
-%cmake_build
+%make_build
 cp -p %{__cmake_builddir}/%{name} %{name}.rpi5
 rm -r %{__cmake_builddir}
 
+cd ..
+
+
+export CMAKE_BUILD_DIR=build-sd845
 # Qualcomm Snapdragon 845
 %cmake %{common_flags} -DSD845=ON
-%cmake_build
+%make_build
 cp -p %{__cmake_builddir}/%{name} %{name}.sd845
 rm -r %{__cmake_builddir}
 
+cd ..
+
+
+export CMAKE_BUILD_DIR=build-sd865
 # Qualcomm Snapdragon 865
 %cmake %{common_flags} -DSD865=ON
-%cmake_build
+%make_build
 cp -p %{__cmake_builddir}/%{name} %{name}.sd865
 rm -r %{__cmake_builddir}
 
+cd ..
+
+
+export CMAKE_BUILD_DIR=build-sd888
 # Qualcomm Snapdragon 888
 %cmake %{common_flags} -DSD888=ON
-%cmake_build
+%make_build
 cp -p %{__cmake_builddir}/%{name} %{name}.sd888
 rm -r %{__cmake_builddir}
 
+cd ..
+
+
+export CMAKE_BUILD_DIR=build-sd8g2
 # Qualcomm Snapdragon 8 Gen 2
 %cmake %{common_flags} -DSD8G2=ON
-%cmake_build
+%make_build
 cp -p %{__cmake_builddir}/%{name} %{name}.sd8g2
 rm -r %{__cmake_builddir}
 
+cd ..
+
+export CMAKE_BUILD_DIR=build-sdoryon1
 # Qualcomm Snapdragon Oryon 1 (X1E80100/X1E78100)
 %cmake %{common_flags} -DSDORYON1=ON
-%cmake_build
+%make_build
 cp -p %{__cmake_builddir}/%{name} %{name}.sdoryon1
 rm -r %{__cmake_builddir}
 
+cd ..
+
+
+export CMAKE_BUILD_DIR=build-tegrat194
 # Nvidia Tegra Xavier
 %cmake %{common_flags} -DTEGRA_T194=ON
-%cmake_build
+%make_build
 cp -p %{__cmake_builddir}/%{name} %{name}.tegrat194
 rm -r %{__cmake_builddir}
 
+cd ..
+
+
+export CMAKE_BUILD_DIR=build-tegrat234
 # Nvidia Tegra Orion
 %cmake %{common_flags} -DTEGRA_T234=ON
-%cmake_build
+%make_build
 cp -p %{__cmake_builddir}/%{name} %{name}.tegrat234
 rm -r %{__cmake_builddir}
 
+cd ..
+
+
+export CMAKE_BUILD_DIR=build-tegrax1
 # Nvidia Tegra X1
 %cmake %{common_flags} -DTEGRAX1=ON
-%cmake_build
+%make_build
 cp -p %{__cmake_builddir}/%{name} %{name}.tegrax1
 rm -r %{__cmake_builddir}
+
+cd ..
 %endif
 
 %cmake %{common_flags} -DNO_LIB_INSTALL=ON \
@@ -403,7 +476,7 @@ rm -r %{__cmake_builddir}
   -DLD80BITS=ON \
   -DNOALIGN=ON
 %endif
-%cmake_build
+%make_build
 
 # Build manpage
 pod2man --stderr docs/%{name}.pod > docs/%{name}.1
@@ -421,7 +494,7 @@ install -Dpm0644 -t %{buildroot}%{_binfmtdir} system/box32.conf
 install -Dpm0644 -t %{buildroot}%{_binfmtdir} system/box64.conf
 install -Dpm0644 -t %{buildroot}%{_sysconfdir} system/box64.box64rc
 %else
-%cmake_install
+%make_install
 %endif
 
 # Install manpage
